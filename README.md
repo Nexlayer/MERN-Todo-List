@@ -46,10 +46,3 @@ MERN Todo app from the GeeksForGeeks MERN Todo app tutorial: https://www.geeksfo
    ```bash
    docker build -t mongodb-with-admin-access-to-db-created:latest .
    ```
-9. **Run each of the containers**:
-   ```bash
-   docker run -d --name mongo -e MONGO_INITDB_ROOT_USERNAME="mongo" -e MONGO_INITDB_ROOT_PASSWORD="passw0rd" -e MONGO_INITDB_DATABASE="todo" -p 27017:27017 mongodb-with-admin-access-to-db-created:latest
-   docker run -d --name express -e MONGODB_URL="mongodb://mongo:passw0rd@127.0.0.1:27017/todo" -p 3000:3000 mern-express-todo:latest
-   docker run -d --name react -e EXPRESS_URL="http://127.0.0.1:3000" -p 80:80 mern-react-todo:latest
-   ```
-10. **Open your browser to http://localhost:80 and enjoy!**
