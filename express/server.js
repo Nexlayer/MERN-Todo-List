@@ -8,10 +8,6 @@ var app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(cors({
-    origin: process.env.PROXY_URL // Front facing URL
-}));
-
 const port = 3001;
 
 mongoose.connect(process.env.MONGODB_URL);
@@ -22,14 +18,14 @@ mongoose.connection.on("error", (error) => {
 });
 
 // Get saved tasks from the database
-app.get("/getTodoList", (req, res) => {
+app.get("/api/getTodoList", (req, res) => {
     TodoModel.find({})
         .then((todoList) => res.json(todoList))
         .catch((err) => res.json(err))
 });
 
 // Add new task to the database
-app.post("/addTodoList", (req, res) => {
+app.post("/api/addTodoList", (req, res) => {
     TodoModel.create({
         task: req.body.task,
         status: req.body.status,
@@ -40,7 +36,7 @@ app.post("/addTodoList", (req, res) => {
 });
 
 // Update task fields (including deadline)
-app.post("/updateTodoList/:id", (req, res) => {
+app.post("/api/updateTodoList/:id", (req, res) => {
     const id = req.params.id;
     const updateData = {
         task: req.body.task,
@@ -53,7 +49,7 @@ app.post("/updateTodoList/:id", (req, res) => {
 });
 
 // Delete task from the database
-app.delete("/deleteTodoList/:id", (req, res) => {
+app.delete("/api/deleteTodoList/:id", (req, res) => {
     const id = req.params.id;
     TodoModel.findByIdAndDelete({ _id: id })
         .then((todo) => res.json(todo))

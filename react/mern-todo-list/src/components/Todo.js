@@ -14,7 +14,7 @@ function Todo() {
 
     // Fetch tasks from database
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/getTodoList`)
+        axios.get('/api/getTodoList')
             .then(result => {
                 setTodoList(result.data)
             })
@@ -46,7 +46,7 @@ function Todo() {
             return;
         }
 
-        axios.post(`${process.env.REACT_APP_API_URL}/addTodoList`, { task: newTask, status: newStatus, deadline: newDeadline })
+        axios.post('/api/addTodoList', { task: newTask, status: newStatus, deadline: newDeadline })
             .then(res => {
                 console.log(res);
                 window.location.reload();
@@ -69,7 +69,7 @@ function Todo() {
         }
 
         // Updating edited data to the database through updateById API
-        axios.post(`${process.env.REACT_APP_API_URL}/updateTodoList/` + id, editedData)
+        axios.post('/api/updateTodoList/' + id, editedData)
             .then(result => {
                 console.log(result);
                 setEditableId(null);
@@ -84,7 +84,7 @@ function Todo() {
 
     // Delete task from database
     const deleteTask = (id) => {
-        axios.delete(`${process.env.REACT_APP_API_URL}/deleteTodoList/` + id)
+        axios.delete('/api/deleteTodoList/' + id)
             .then(result => {
                 console.log(result);
                 window.location.reload();
