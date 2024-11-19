@@ -57,5 +57,5 @@ app.delete("/api/deleteTodoList/:id", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('Server running on 3001');
+    console.log(`Server running on ${port}`);
 });
