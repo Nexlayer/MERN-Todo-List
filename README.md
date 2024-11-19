@@ -52,4 +52,4 @@ MERN Todo app from the GeeksForGeeks MERN Todo app tutorial: https://www.geeksfo
    docker run -d --network mern-todo --name express -e MONGODB_URL="mongodb://mongo:passw0rd@127.0.0.1:27017/todo" -p 3000:3000 mern-express-todo:latest
    docker run -d --network mern-todo --name react -e EXPRESS_URL="http://127.0.0.1:3000" -p 80:80 mern-react-todo:latest
    ```
-10. **Open your browser to http://localhost:80 and enjoy!**:
+10. **Open your browser to http://localhost:80 and enjoy!**
