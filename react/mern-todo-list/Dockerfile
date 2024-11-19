@@ -18,4 +18,4 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 80
 
 # Substitute the environment variables in the nginx configuration template and start nginx
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/entrypoint.sh"]
