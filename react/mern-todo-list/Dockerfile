@@ -1,6 +1,3 @@
-# Step 1: Build the React app
-FROM node:18 AS build
-
 # Serve the React app using nginx
 FROM nginx:alpine
 
