@@ -29,10 +29,9 @@ MERN Todo app from the GeeksForGeeks MERN Todo app tutorial: https://www.geeksfo
    ```bash
    docker build -t mern-react-todo:latest .
    ```
-5. **Navigate to express folder and install dependencies**:
+5. **Navigate to express folder**:
    ```bash
    cd ../../express
-   npm install
    ```
 6. **Build Docker container for backend**:
    ```bash
