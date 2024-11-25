@@ -1,0 +1,34 @@
+application:
+  template: 
+    name: "mongodb-express-react-nodejs"
+    deploymentName: "My MERN Todo App"
+    registryLogin:
+      registry: ghcr.io
+      username: <Github username> # Your GitHub username
+      personalAccessToken: <Github Packages Read-Only PAT> # Your GitHub personal access token
+    pods:
+    - type: database
+      exposeHttp: false
+      name: mongoDB
+      tag: <ghcr.io/myLowercaseUsername/mern-mongo-todo:v0.0.1> # Your generated Docker image
+      vars:
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: mongo
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        value: passw0rd
+      - key: MONGO_INITDB_DATABASE
+        value: todo
+    - type: express
+      exposeHttp: false
+      name: express
+      tag: <ghcr.io/myLowercaseUsername/mern-express-todo:v0.0.1> # Your generated Docker image
+      vars:
+      - key: MONGODB_URL
+        value: DATABASE_CONNECTION_STRING # Provided by Nexlayer.  Used to retrieve the URL needed to connect to database pod
+    - type: nginx
+      exposeHttp: true
+      name: nginx
+      tag: <ghcr.io/myLowercaseUsername/mern-react-todo:v0.0.1> # Your generated Docker image
+      vars:
+      - key: EXPRESS_URL
+        value: BACKEND_CONNECTION_URL # Provided by Nexlayer.  Used to retrieve the URL needed to connect to backend pod
