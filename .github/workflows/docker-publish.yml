@@ -1,0 +1,87 @@
+name: On Tag, Build and Push MERN Docker Images to GHCR
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write  # Required to push images to GHCR
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 3: Convert repository owner to lowercase (docker image names must all be lowercase)
+      - name: Set repository owner lowercase
+        id: owner_lowercase
+        run: echo "owner_lowercase=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      # Step 4: Build the React app
+      - name: Install and Build React App
+        run: |
+          cd react/mern-todo-list
+          npm ci # Install dependencies (prefer ci for CI environments)
+          npm run build # Build the React app
+          cd ../../ # Return to home directory
+      # Step 5: Get the tag associated with push for the react image
+      - name: Extract metadata for React Docker image
+        id: react_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ env.owner_lowercase }}/mern-react-todo
+          tags: |
+            type=ref,event=tag
+      # Step 6: Build and Push React Docker Image
+      - name: Build and Push React App Image
+        uses: docker/build-push-action@v5
+        with:
+          context: react/mern-todo-list
+          push: true
+          tags: ${{ steps.react_meta.outputs.tags }}
+
+      # Step 7: Get the tag associated with push for the express image
+      - name: Extract metadata for Express Docker image
+        id: express_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ env.owner_lowercase }}/mern-express-todo
+          tags: |
+            type=ref,event=tag
+      # Step 8: Build and Push Express Docker Image
+      - name: Build and Push Express App Image
+        uses: docker/build-push-action@v5
+        with:
+          context: express
+          push: true
+          tags: ${{ steps.express_meta.outputs.tags }}
+
+      # Step 9: Get the tag associated with push for the mongo image
+      - name: Extract metadata for Mongo Docker image
+        id: mongo_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ env.owner_lowercase }}/mern-mongo-todo
+          tags: |
+            type=ref,event=tag
+      # Step 10: Build and Push Mongo Docker Image
+      - name: Build and Push Mongo Image
+        uses: docker/build-push-action@v5
+        with:
+          context: mongoDB
+          push: true
+          tags: ${{ steps.mongo_meta.outputs.tags }}
