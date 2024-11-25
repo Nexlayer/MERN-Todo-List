@@ -23,7 +23,7 @@ function Todo() {
 
     // Function to toggle the editable state for a specific row
     const toggleEditable = (id) => {
-        const rowData = todoList.find((data) => data._id === id);
+        const rowData = todoList.find((data) => data.id === id);
         if (rowData) {
             setEditableId(id);
             setEditedTask(rowData.task);
@@ -75,7 +75,7 @@ function Todo() {
                 setEditableId(null);
                 setEditedTask("");
                 setEditedStatus("");
-                setEditedDeadline(""); // Clear the edited deadline
+                setEditedDeadline("");
                 window.location.reload();
             })
             .catch(err => console.log(err));
@@ -92,6 +92,13 @@ function Todo() {
             .catch(err =>
                 console.log(err)
             )
+    }
+
+    function getTimestamp(inputDateTime) {
+        // Convert the input value (string 'YYYY-MM-DDTHH:MM') into a Date object
+        const date = new Date(inputDateTime);
+
+        return date;
     }
 
     return (
@@ -112,9 +119,9 @@ function Todo() {
                             {Array.isArray(todoList) ? (
                                 <tbody>
                                     {todoList.map((data) => (
-                                        <tr key={data._id}>
+                                        <tr key={data.id}>
                                             <td>
-                                                {editableId === data._id ? (
+                                                {editableId === data.id ? (
                                                     <input
                                                         type="text"
                                                         className="form-control"
@@ -126,7 +133,7 @@ function Todo() {
                                                 )}
                                             </td>
                                             <td>
-                                                {editableId === data._id ? (
+                                                {editableId === data.id ? (
                                                     <input
                                                         type="text"
                                                         className="form-control"
@@ -138,29 +145,29 @@ function Todo() {
                                                 )}
                                             </td>
                                             <td>
-                                                {editableId === data._id ? (
+                                                {editableId === data.id ? (
                                                     <input
                                                         type="datetime-local"
                                                         className="form-control"
                                                         value={editedDeadline}
-                                                        onChange={(e) => setEditedDeadline(e.target.value)}
+                                                        onChange={(e) => setEditedDeadline(getTimestamp(e.target.value))}
                                                     />
                                                 ) : (
-                                                    data.deadline ? new Date(data.deadline).toLocaleString() : ''
+                                                    data.deadline ? new Date(data.deadline.slice(0, 16)).toLocaleString() : ''
                                                 )}
                                             </td>
 
                                             <td>
-                                                {editableId === data._id ? (
-                                                    <button className="btn btn-success btn-sm" onClick={() => saveEditedTask(data._id)}>
+                                                {editableId === data.id ? (
+                                                    <button className="btn btn-success btn-sm" onClick={() => saveEditedTask(data.id)}>
                                                         Save
                                                     </button>
                                                 ) : (
-                                                    <button className="btn btn-primary btn-sm" onClick={() => toggleEditable(data._id)}>
+                                                    <button className="btn btn-primary btn-sm" onClick={() => toggleEditable(data.id)}>
                                                         Edit
                                                     </button>
                                                 )}
-                                                <button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(data._id)}>
+                                                <button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(data.id)}>
                                                     Delete
                                                 </button>
                                             </td>
