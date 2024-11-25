@@ -23,7 +23,7 @@ function Todo() {
 
     // Function to toggle the editable state for a specific row
     const toggleEditable = (id) => {
-        const rowData = todoList.find((data) => data.id === id);
+        const rowData = todoList.find((data) => data._id === id);
         if (rowData) {
             setEditableId(id);
             setEditedTask(rowData.task);
@@ -119,9 +119,9 @@ function Todo() {
                             {Array.isArray(todoList) ? (
                                 <tbody>
                                     {todoList.map((data) => (
-                                        <tr key={data.id}>
+                                        <tr key={data._id}>
                                             <td>
-                                                {editableId === data.id ? (
+                                                {editableId === data._id ? (
                                                     <input
                                                         type="text"
                                                         className="form-control"
@@ -133,7 +133,7 @@ function Todo() {
                                                 )}
                                             </td>
                                             <td>
-                                                {editableId === data.id ? (
+                                                {editableId === data._id ? (
                                                     <input
                                                         type="text"
                                                         className="form-control"
@@ -145,7 +145,7 @@ function Todo() {
                                                 )}
                                             </td>
                                             <td>
-                                                {editableId === data.id ? (
+                                                {editableId === data._id ? (
                                                     <input
                                                         type="datetime-local"
                                                         className="form-control"
@@ -158,16 +158,16 @@ function Todo() {
                                             </td>
 
                                             <td>
-                                                {editableId === data.id ? (
-                                                    <button className="btn btn-success btn-sm" onClick={() => saveEditedTask(data.id)}>
+                                                {editableId === data._id ? (
+                                                    <button className="btn btn-success btn-sm" onClick={() => saveEditedTask(data._id)}>
                                                         Save
                                                     </button>
                                                 ) : (
-                                                    <button className="btn btn-primary btn-sm" onClick={() => toggleEditable(data.id)}>
+                                                    <button className="btn btn-primary btn-sm" onClick={() => toggleEditable(data._id)}>
                                                         Edit
                                                     </button>
                                                 )}
-                                                <button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(data.id)}>
+                                                <button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(data._id)}>
                                                     Delete
                                                 </button>
                                             </td>
