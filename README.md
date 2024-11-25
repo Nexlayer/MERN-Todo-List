@@ -21,9 +21,9 @@ NOTICE: This repository includes mutiple Github actions workflows that builds an
    vi nexlayer-template.yaml
    ```
 7. **Update registryLogin information to be your own**
-8. **Update database pod tag to reference Docker image created by Github actions workflow**
-9. **Update express pod tag to reference Docker image created by Github actions workflow**
-10. **Update nginx pod tag to reference Docker image created by Github actions workflow**
+8. **Update database pod tag to reference Mongo Docker image created by Github actions workflow**
+9. **Update express pod tag to reference Express Docker image created by Github actions workflow**
+10. **Update nginx pod tag to reference React Docker image created by Github actions workflow**
 11. **Submit Template to Nexlayer**
 
 ## Updating this repository and building new images
