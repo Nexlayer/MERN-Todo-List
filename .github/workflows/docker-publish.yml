@@ -3,7 +3,7 @@ name: On Tag, Build and Push MERN Docker Images to GHCR
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 jobs:
   build-and-push:
