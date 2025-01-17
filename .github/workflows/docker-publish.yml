@@ -51,6 +51,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: react/mern-todo-list
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.react_meta.outputs.tags }}
 
@@ -67,6 +68,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: express
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.express_meta.outputs.tags }}
 
@@ -83,5 +85,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: mongoDB
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.mongo_meta.outputs.tags }}
