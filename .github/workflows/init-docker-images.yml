@@ -40,15 +40,15 @@ jobs:
       # Step 5: Build and Push React Docker Image
       - name: Build and Push React App Image
         run: |
-          docker build -t ghcr.io/${{ env.owner_lowercase }}/mern-react-todo:v0.0.1 react/mern-todo-list
+          docker build --platform linux/amd64 -t ghcr.io/${{ env.owner_lowercase }}/mern-react-todo:v0.0.1 react/mern-todo-list
           docker push ghcr.io/${{ env.owner_lowercase }}/mern-react-todo:v0.0.1
       # Step 6: Build and Push Express Docker Image
       - name: Build and Push Express App Image
         run: |
-          docker build -t ghcr.io/${{ env.owner_lowercase }}/mern-express-todo:v0.0.1 express
+          docker build --platform linux/amd64 -t ghcr.io/${{ env.owner_lowercase }}/mern-express-todo:v0.0.1 express
           docker push ghcr.io/${{ env.owner_lowercase }}/mern-express-todo:v0.0.1
       # Step 7: Build and Push Mongo Docker Image
       - name: Build and Push Mongo Image
         run: |
-          docker build -t ghcr.io/${{ env.owner_lowercase }}/mern-mongo-todo:v0.0.1 mongoDB
+          docker build --platform linux/amd64 -t ghcr.io/${{ env.owner_lowercase }}/mern-mongo-todo:v0.0.1 mongoDB
           docker push ghcr.io/${{ env.owner_lowercase }}/mern-mongo-todo:v0.0.1
